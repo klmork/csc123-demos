@@ -1,4 +1,5 @@
 const globalScale = 1;
+const canvasWidthAndHeight = 400;
 
 const miles = {
   x: 200,
@@ -81,7 +82,9 @@ const miles = {
       }
       this.scaling += this.deltaScaling;
     }
-    this.rotation += this.deltaRotation;
+    if (rotateButton.isRotating) {
+      this.rotation += this.deltaRotation;
+    }
   },
 };
 
@@ -109,8 +112,35 @@ const scaleButton = {
   },
 };
 
+const rotateButton = {
+  x: 0,
+  y: 20,
+  w: 150,
+  h: 50,
+  isRotating: false,
+  drawButton: function () {
+    noStroke();
+    fill("lavender");
+    rect(this.x, this.y, this.w, this.h, 10);
+    fill("rgb(101,97,97)");
+    const buttonText = this.isRotating ? "Stop Rotating" : "Start Rotating";
+    const textPadding = 15;
+    textSize(20);
+    text(
+      buttonText,
+      this.x + textPadding,
+      this.y + textPadding,
+      this.w - textPadding,
+      this.h - textPadding
+    );
+  },
+  setX: function () {
+    this.x = canvasWidthAndHeight - this.w - 20;
+  },
+};
 function setup() {
   createCanvas(400, 400);
+  rotateButton.setX();
 }
 
 function draw() {
@@ -125,6 +155,7 @@ function draw() {
 
   miles.drawMiles();
   scaleButton.drawButton();
+  rotateButton.drawButton();
   pop();
 }
 
@@ -149,5 +180,17 @@ function mousePressed() {
 
   if (mouseInScaleBox) {
     scaleButton.isScaling = !scaleButton.isScaling;
+  }
+
+  const mouseInRotateBox = isPointInBox(
+    rotateButton.x,
+    rotateButton.y,
+    rotateButton.w,
+    rotateButton.h,
+    mouseX,
+    mouseY
+  );
+  if (mouseInRotateBox) {
+    rotateButton.isRotating = !rotateButton.isRotating;
   }
 }
