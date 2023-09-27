@@ -1,3 +1,5 @@
+const globalScale = 1;
+
 const miles = {
   x: 200,
   y: 300,
@@ -114,10 +116,38 @@ function setup() {
 function draw() {
   background(200);
 
+  push();
+  scale(globalScale);
+  noStroke();
   // box - okay if background is not at origin
   fill(128, 60, 32);
   rect(150, 300, 100, 100);
 
   miles.drawMiles();
   scaleButton.drawButton();
+  pop();
+}
+
+const isPointInBox = function (x, y, w, h, pointX, pointY) {
+  return (
+    pointX > x * globalScale &&
+    pointX < (x + w) * globalScale &&
+    pointY > y * globalScale &&
+    pointY < (y + h) * globalScale
+  );
+};
+
+function mousePressed() {
+  const mouseInScaleBox = isPointInBox(
+    scaleButton.x,
+    scaleButton.y,
+    scaleButton.w,
+    scaleButton.h,
+    mouseX,
+    mouseY
+  );
+
+  if (mouseInScaleBox) {
+    scaleButton.isScaling = !scaleButton.isScaling;
+  }
 }
