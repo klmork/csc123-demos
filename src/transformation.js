@@ -65,15 +65,13 @@ const miles = {
     ellipse(10, 50, 20, 50);
 
     // show origin
-    fill(0, 255, 255);
+    fill(255, 255, 255);
     ellipse(0, 0, 10, 10);
     stroke(255, 255, 0);
     line(-100, 0, 100, 0);
-    stroke(0, 0, 255);
+    stroke(0, 255, 255);
     line(0, 100, 0, -100);
     pop();
-
-    this.updateMiles();
   },
   updateMiles: function () {
     if (scaleButton.isScaling) {
@@ -152,7 +150,10 @@ const rotateButton = {
 };
 function setup() {
   setGlobalScale();
-  const canvas = createCanvas(canvasWidthAndHeight, canvasWidthAndHeight);
+  const canvas = createCanvas(
+    canvasWidthAndHeight * globalScale,
+    canvasWidthAndHeight * globalScale
+  );
   // Move the canvas so it’s inside our <div id="sketch-holder">.
   // ref: https://github.com/processing/p5.js/wiki/Positioning-your-canvas
   canvas.parent("sketch-holder");
