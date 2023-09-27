@@ -8,7 +8,16 @@ const miles = {
   deltaScaling: 0.01,
   rotation: 0,
   deltaRotation: 0.01,
+  originAtFeet: false,
   drawMiles: function () {
+    if (this.originAtFeet) {
+      this.drawAtFeet();
+    } else {
+      this.drawAtCenter();
+    }
+    this.updateMiles();
+  },
+  drawAtCenter: function () {
     push();
     translate(this.x, this.y - 80);
     rotate(this.rotation);
@@ -70,6 +79,70 @@ const miles = {
     stroke(255, 255, 0);
     line(-100, 0, 100, 0);
     stroke(0, 255, 255);
+    line(0, 100, 0, -100);
+    pop();
+  },
+  drawAtFeet: function () {
+    push();
+    translate(this.x, this.y);
+    rotate(this.r);
+    scale(this.s);
+    //draw head
+    fill(0);
+    noStroke();
+    ellipse(0, -155, 60, 75);
+    //eye ring
+    fill(255, 0, 0);
+    ellipse(-15, -160, 22, 17);
+    ellipse(15, -160, 22, 17);
+    //eyes
+    fill(255);
+    ellipse(-15, -160, 18, 13);
+    ellipse(15, -160, 18, 13);
+
+    //arms
+    fill(0);
+    ellipse(-40, -105, 50, 15);
+    ellipse(40, -105, 50, 15);
+    //hands
+    ellipse(-60, -105, 15, 15);
+    ellipse(60, -105, 15, 15);
+
+    //body miles
+    fill(0);
+    ellipse(0, -80, 50, 75);
+    //spider logo
+    stroke(255, 0, 0);
+    fill(255, 0, 0);
+    ellipse(0, -95, 10, 15);
+    //top
+    line(-15, -105, 0, -100);
+    line(15, -105, 0, -100);
+    //top-middle
+    line(-15, -100, 0, -100);
+    line(15, -100, 0, -100);
+    //bottom
+    line(-15, -95, 0, -95);
+    line(15, -95, 0, -95);
+    //bottom-middle
+    line(-15, -90, 0, -95);
+    line(15, -90, 0, -95);
+
+    noStroke();
+    //feet
+    fill(0);
+    ellipse(-15, -5, 20, 10);
+    ellipse(15, -5, 20, 10);
+    //legs
+    ellipse(-10, -30, 20, 50);
+    ellipse(10, -30, 20, 50);
+
+    // show origin
+    fill(0, 255, 255);
+    ellipse(0, 0, 10, 10);
+    stroke(255, 255, 0);
+    line(-100, 0, 100, 0);
+    stroke(0, 0, 255);
     line(0, 100, 0, -100);
     pop();
   },
@@ -237,3 +310,7 @@ function resetSketch() {
 document.getElementById("reset-canvas").onclick = function () {
   resetSketch();
 };
+
+function moveOrigin() {
+  miles.originAtFeet = !miles.originAtFeet;
+}
