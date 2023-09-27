@@ -86,6 +86,12 @@ const miles = {
       this.rotation += this.deltaRotation;
     }
   },
+  reset: function () {
+    this.scaling = 1;
+    this.deltaScaling = 0.01;
+    this.rotation = 0;
+    this.deltaRotation = 0.01;
+  },
 };
 
 const scaleButton = {
@@ -109,6 +115,9 @@ const scaleButton = {
       this.w - textPadding,
       this.h - textPadding
     );
+  },
+  reset: function () {
+    this.isScaling = false;
   },
 };
 
@@ -136,6 +145,9 @@ const rotateButton = {
   },
   setX: function () {
     this.x = canvasWidthAndHeight - this.w - 20;
+  },
+  reset: function () {
+    this.isRotating = false;
   },
 };
 function setup() {
@@ -197,3 +209,13 @@ function mousePressed() {
     rotateButton.isRotating = !rotateButton.isRotating;
   }
 }
+
+function resetSketch() {
+  miles.reset();
+  scaleButton.reset();
+  rotateButton.reset();
+  console.log("here");
+}
+document.getElementById("reset-canvas").onclick = function () {
+  resetSketch();
+};
