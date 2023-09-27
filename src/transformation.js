@@ -69,17 +69,28 @@ const miles = {
     stroke(0, 0, 255);
     line(0, 100, 0, -100);
     pop();
+
+    this.updateMiles();
+  },
+  updateMiles: function () {
+    if (this.scaling > 3 || this.scaling < 0) {
+      this.deltaScaling *= -1;
+    }
+    this.scaling += this.deltaScaling;
+    this.rotation += this.deltaRotation;
   },
 };
 
 function setup() {
   createCanvas(400, 400);
-  background(200);
-  miles.drawMiles();
 }
 
 function draw() {
+  background(200);
+
   // box - okay if background is not at origin
   fill(128, 60, 32);
   rect(150, 300, 100, 100);
+
+  miles.drawMiles();
 }
