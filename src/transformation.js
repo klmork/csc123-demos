@@ -73,11 +73,37 @@ const miles = {
     this.updateMiles();
   },
   updateMiles: function () {
-    if (this.scaling > 3 || this.scaling < 0) {
-      this.deltaScaling *= -1;
+    if (scaleButton.isScaling) {
+      if (this.scaling > 3 || this.scaling < 0) {
+        this.deltaScaling *= -1;
+      }
+      this.scaling += this.deltaScaling;
     }
-    this.scaling += this.deltaScaling;
     this.rotation += this.deltaRotation;
+  },
+};
+
+const scaleButton = {
+  x: 20,
+  y: 20,
+  w: 150,
+  h: 50,
+  isScaling: false,
+  drawButton: function () {
+    noStroke();
+    fill("lavender");
+    rect(this.x, this.y, this.w, this.h, 10);
+    fill("rgb(101,97,97)");
+    const buttonText = this.isScaling ? "Stop Scaling" : "Start Scaling";
+    const textPadding = 15;
+    textSize(20);
+    text(
+      buttonText,
+      this.x + textPadding,
+      this.y + textPadding,
+      this.w - textPadding,
+      this.h - textPadding
+    );
   },
 };
 
@@ -93,4 +119,5 @@ function draw() {
   rect(150, 300, 100, 100);
 
   miles.drawMiles();
+  scaleButton.drawButton();
 }
