@@ -1,4 +1,4 @@
-const globalScale = 1;
+let globalScale = 1;
 const canvasWidthAndHeight = 400;
 
 const miles = {
@@ -151,6 +151,7 @@ const rotateButton = {
   },
 };
 function setup() {
+  setGlobalScale();
   const canvas = createCanvas(canvasWidthAndHeight, canvasWidthAndHeight);
   // Move the canvas so it’s inside our <div id="sketch-holder">.
   // ref: https://github.com/processing/p5.js/wiki/Positioning-your-canvas
@@ -172,6 +173,22 @@ function draw() {
   scaleButton.drawButton();
   rotateButton.drawButton();
   pop();
+}
+
+function setGlobalScale() {
+  const differenceW = windowWidth - canvasWidthAndHeight;
+  const differenceH = windowHeight - canvasWidthAndHeight;
+  const difference = differenceW > differenceH ? differenceH : differenceW;
+  const timesBigger = difference / canvasWidthAndHeight;
+  globalScale = timesBigger > 0 ? timesBigger : 0;
+}
+
+function windowResized() {
+  setGlobalScale();
+  resizeCanvas(
+    canvasWidthAndHeight * globalScale,
+    canvasWidthAndHeight * globalScale
+  );
 }
 
 const isPointInBox = function (x, y, w, h, pointX, pointY) {
