@@ -139,7 +139,7 @@ const rotateButton = {
   },
 };
 function setup() {
-  const canvas = createCanvas(400, 400);
+  const canvas = createCanvas(canvasWidthAndHeight, canvasWidthAndHeight);
   // Move the canvas so it’s inside our <div id="sketch-holder">.
   // ref: https://github.com/processing/p5.js/wiki/Positioning-your-canvas
   canvas.parent("sketch-holder");
